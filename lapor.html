@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lapor Pak - Kelurahan Digital</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .android-wallpaper {
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1000&q=80') no-repeat center center fixed;
+            background-size: cover;
+        }
+        /* Custom scrollbar style */
+        .custom-scroll::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scroll::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .custom-scroll::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="android-wallpaper min-h-screen flex flex-col justify-between text-white font-sans select-none overflow-hidden">
+
+    <!-- STATUS BAR ANDROID -->
+    <div class="w-full bg-black/40 backdrop-blur-md px-4 py-1 text-xs flex justify-between items-center text-gray-200 z-20">
+        <div class="flex items-center space-x-2">
+            <span id="clock" class="font-semibold">08:00</span>
+        </div>
+        <div class="flex items-center space-x-2">
+            <i class="fa-solid fa-signal text-[10px]"></i>
+            <i class="fa-solid fa-wifi text-[10px]"></i>
+            <span class="text-[10px]">98%</span>
+            <i class="fa-solid fa-battery-full text-xs"></i>
+        </div>
+    </div>
+
+    <!-- APP HEADER -->
+    <div class="w-full max-w-md mx-auto bg-black/30 backdrop-blur-md px-4 py-3 flex items-center justify-between border-b border-white/10 z-10">
+        <a href="index.html" class="flex items-center text-white hover:text-emerald-400 transition">
+            <i class="fa-solid fa-arrow-left text-lg mr-3"></i>
+            <span class="font-semibold text-base">Lapor Pak!</span>
+        </a>
+        <div class="w-8 h-8 bg-emerald-500/20 rounded-full flex items-center justify-center border border-emerald-400/30">
+            <i class="fa-solid fa-comments text-emerald-300 text-sm"></i>
+        </div>
+    </div>
+
+    <!-- KONTEN UTAMA (SCROLLABLE AREA) -->
+    <div class="flex-1 overflow-y-auto custom-scroll px-4 py-4 max-w-md mx-auto w-full space-y-4">
+
+        <!-- KARTU FORMULIR PENGADUAN -->
+        <div class="bg-black/40 backdrop-blur-md rounded-2xl p-4 border border-white/10 shadow-lg space-y-3">
+            <h3 class="font-semibold text-sm text-emerald-300 flex items-center">
+                <i class="fa-solid fa-paper-plane mr-2"></i> Buat Laporan Baru
+            </h3>
+            
+            <form id="laporForm" onsubmit="kirimLaporan(event)" class="space-y-3 text-xs">
+                <!-- Kategori Laporan -->
+                <div>
+                    <label class="block text-gray-300 text-[11px] mb-1">Kategori Masalah</label>
+                    <select id="kategoriInput" required class="w-full bg-white/10 border border-white/20 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-emerald-400">
+                        <option value="" disabled selected class="text-black">Pilih Kategori...</option>
+                        <option value="Fasilitas Umum" class="text-black">Fasilitas Umum / Jalan Rusak</option>
+                        <option value="Kebersihan" class="text-black">Kebersihan & Sampah</option>
+                        <option value="Keamanan" class="text-black">Ketertiban & Keamanan</option>
+                        <option value="Pelayanan" class="text-black">Pelayanan Kelurahan</option>
+                        <option value="Lainnya" class="text-black">Lainnya</option>
+                    </select>
+                </div>
+
+                <!-- Lokasi Kejadian -->
+                <div>
+                    <label class="block text-gray-300 text-[11px] mb-1">Lokasi Kejadian (RT/RW / Nama Jalan)</label>
+                    <input type="text" id="lokasiInput" required placeholder="Contoh: Jl. Mawar RT 03 / RW 02" class="w-full bg-white/10 border border-white/20 rounded-xl px-3 py-2 text-white placeholder-gray-400 focus:outline-none focus:border-emerald-400">
+                </div>
+
+                <!-- Detail Laporan -->
+                <div>
+                    <label class="block text-gray-300 text-[11px] mb-1">Detail Laporan</label>
+                    <textarea id="detailInput" required rows="3" placeholder="Jelaskan kronologi atau detail masalah secara lengkap..." class="w-full bg-white/10 border border-white/20 rounded-xl px-3 py-2 text-white placeholder-gray-400 focus:outline-none focus:border-emerald-400 resize-none"></textarea>
+                </div>
+
+                <!-- Lampiran Foto -->
+                <div>
+                    <label class="block text-gray-300 text-[11px] mb-1">Lampirkan Foto Bukti (Opsional)</label>
+                    <div class="border border-dashed border-white/30 rounded-xl p-3 text-center cursor-pointer hover:bg-white/5 transition" onclick="document.getElementById('fotoInput').click()">
+                        <i class="fa-solid fa-camera text-xl text-emerald-400 mb-1"></i>
+                        <p class="text-[10px] text-gray-300" id="fileLabel">Klik untuk unggah foto dari galeri/kamera</p>
+                        <input type="file" id="fotoInput" accept="image/*" class="hidden" onchange="updateFileName()">
+                    </div>
+                </div>
+
+                <!-- Opsi Anonim -->
+                <div class="flex items-center space-x-2 pt-1">
+                    <input type="checkbox" id="anonim" class="rounded accent-emerald-500">
+                    <label for="anonim" class="text-[11px] text-gray-300">Kirim sebagai Anonim (Sembunyikan Nama saya)</label>
+                </div>
+
+                <!-- Tombol Submit -->
+                <button type="submit" id="btnSubmit" class="w-full bg-gradient-to-r from-emerald-600 to-teal-500 hover:brightness-110 text-white font-semibold py-2.5 rounded-xl transition shadow-lg mt-2 flex justify-center items-center">
+                    <i class="fa-solid fa-paper-plane mr-1"></i> <span id="btnText">Kirim Laporan</span>
+                </button>
+            </form>
+        </div>
+
+        <!-- KARTU STATUS LAPORAN TERAKHIR -->
+        <div class="bg-black/40 backdrop-blur-md rounded-2xl p-4 border border-white/10 shadow-lg space-y-3">
+            <h3 class="font-semibold text-sm text-emerald-300 flex items-center justify-between">
+                <span><i class="fa-solid fa-clock-rotate-left mr-2"></i> Laporan Terbaru</span>
+                <span class="text-[10px] bg-white/10 px-2 py-0.5 rounded-full text-gray-300">Publik</span>
+            </h3>
+
+            <!-- Item Laporan 1 -->
+            <div class="bg-white/5 p-3 rounded-xl border border-white/5 space-y-1.5">
+                <div class="flex items-center justify-between">
+                    <span class="text-[10px] bg-amber-500/20 text-amber-300 border border-amber-500/30 px-2 py-0.5 rounded-full">Proses</span>
+                    <span class="text-[10px] text-gray-400">14 Aug 2026</span>
+                </div>
+                <h4 class="font-bold text-xs text-white">Lampu Jalan Padam di RT 04</h4>
+                <p class="text-[11px] text-gray-300">Lampu jalan utama dekat pos ronda padam sejak semalam.</p>
+            </div>
+
+            <!-- Item Laporan 2 -->
+            <div class="bg-white/5 p-3 rounded-xl border border-white/5 space-y-1.5">
+                <div class="flex items-center justify-between">
+                    <span class="text-[10px] bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2 py-0.5 rounded-full">Selesai</span>
+                    <span class="text-[10px] text-gray-400">12 Aug 2026</span>
+                </div>
+                <h4 class="font-bold text-xs text-white">Pembersihan Sampah Liar RW 02</h4>
+                <p class="text-[11px] text-gray-300">Tumpukan sampah di pinggir selokan sudah dibersihkan petugas.</p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- NAVIGATION BAR ANDROID -->
+    <div class="w-full bg-black/40 backdrop-blur-md py-3 px-8 flex justify-between items-center text-gray-300 max-w-md mx-auto z-20">
+        <button onclick="window.history.back()" class="hover:text-white transition" title="Kembali">
+            <i class="fa-solid fa-caret-left text-lg"></i>
+        </button>
+        <a href="index.html" class="hover:text-white transition" title="Home">
+            <i class="fa-solid fa-circle text-xs"></i>
+        </a>
+        <button onclick="alert('Aplikasi Kelurahan Digital V1.0')" class="hover:text-white transition" title="Menu Utama">
+            <i class="fa-solid fa-square text-xs"></i>
+        </button>
+    </div>
+
+    <script>
+        // PASTE URL WEB APP GOOGLE APPS SCRIPT ANDA DI SINI
+        const GAS_URL = "https://script.google.com/macros/s/AKfycbyNmTgwNWnwCcNLZrzIxBMlX5pN0tBHasKGRk-TcyAtvpKxa9kR8Eg-44WxBoQ2YY7MpA/exec";
+
+        function updateTime() {
+            const now = new Date();
+            let hours = now.getHours().toString().padStart(2, '0');
+            let minutes = now.getMinutes().toString().padStart(2, '0');
+            document.getElementById('clock').innerText = `${hours}:${minutes}`;
+        }
+        setInterval(updateTime, 1000);
+        updateTime();
+
+        function updateFileName() {
+            const input = document.getElementById('fotoInput');
+            const label = document.getElementById('fileLabel');
+            if (input.files.length > 0) {
+                label.innerText = `File terpilih: ${input.files[0].name}`;
+                label.classList.add('text-emerald-300', 'font-semibold');
+            }
+        }
+
+        async function kirimLaporan(e) {
+            e.preventDefault();
+
+            const btnSubmit = document.getElementById('btnSubmit');
+            const btnText = document.getElementById('btnText');
+            btnSubmit.disabled = true;
+            btnText.innerText = 'Mengirim...';
+
+            const fileInput = document.getElementById('fotoInput');
+            let fotoData = null;
+
+            // Membaca berkas foto jika diunggah oleh pengguna
+            if (fileInput.files.length > 0) {
+                const file = fileInput.files[0];
+                fotoData = await new Promise((resolve) => {
+                    const reader = new FileReader();
+                    reader.onload = (evt) => {
+                        const base64 = evt.target.result.split(',')[1];
+                        resolve({
+                            base64: base64,
+                            type: file.type,
+                            name: file.name
+                        });
+                    };
+                    reader.readAsDataURL(file);
+                });
+            }
+
+            const payload = {
+                kategori: document.getElementById('kategoriInput').value,
+                lokasi: document.getElementById('lokasiInput').value,
+                detail: document.getElementById('detailInput').value,
+                anonim: document.getElementById('anonim').checked,
+                foto: fotoData
+            };
+
+            fetch(GAS_URL, {
+                method: "POST",
+                mode: "no-cors",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(payload)
+            })
+            .then(() => {
+                alert('Laporan Anda telah berhasil terkirim! Tim Kelurahan akan memverifikasi dalam waktu 1x24 jam.');
+                document.getElementById('laporForm').reset();
+                document.getElementById('fileLabel').innerText = 'Klik untuk unggah foto dari galeri/kamera';
+                document.getElementById('fileLabel').classList.remove('text-emerald-300', 'font-semibold');
+            })
+            .catch(err => {
+                alert('Gagal mengirim laporan. Silakan coba lagi.');
+                console.error(err);
+            })
+            .finally(() => {
+                btnSubmit.disabled = false;
+                btnText.innerText = 'Kirim Laporan';
+            });
+        }
+    </script>
+</body>
+</html>

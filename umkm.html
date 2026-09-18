@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UMKM Warga - Kelurahan Digital</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .android-wallpaper {
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1000&q=80') no-repeat center center fixed;
+            background-size: cover;
+        }
+        /* Custom scrollbar style */
+        .custom-scroll::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scroll::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .custom-scroll::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="android-wallpaper min-h-screen flex flex-col justify-between text-white font-sans select-none overflow-hidden">
+
+    <!-- STATUS BAR ANDROID -->
+    <div class="w-full bg-black/40 backdrop-blur-md px-4 py-1 text-xs flex justify-between items-center text-gray-200 z-20">
+        <div class="flex items-center space-x-2">
+            <span id="clock" class="font-semibold">08:00</span>
+        </div>
+        <div class="flex items-center space-x-2">
+            <i class="fa-solid fa-signal text-[10px]"></i>
+            <i class="fa-solid fa-wifi text-[10px]"></i>
+            <span class="text-[10px]">98%</span>
+            <i class="fa-solid fa-battery-full text-xs"></i>
+        </div>
+    </div>
+
+    <!-- APP HEADER -->
+    <div class="w-full max-w-md mx-auto bg-black/30 backdrop-blur-md px-4 py-3 flex items-center justify-between border-b border-white/10 z-10">
+        <a href="index.html" class="flex items-center text-white hover:text-orange-400 transition">
+            <i class="fa-solid fa-arrow-left text-lg mr-3"></i>
+            <span class="font-semibold text-base">UMKM Warga</span>
+        </a>
+        <div class="w-8 h-8 bg-orange-500/20 rounded-full flex items-center justify-center border border-orange-400/30">
+            <i class="fa-solid fa-store text-orange-300 text-sm"></i>
+        </div>
+    </div>
+
+    <!-- KONTEN UTAMA (AREA DAPAT DI-SCROLL) -->
+    <div class="flex-1 overflow-y-auto custom-scroll px-4 py-4 max-w-md mx-auto w-full space-y-4">
+
+        <!-- SEARCH BAR & FILTER -->
+        <div class="bg-black/40 backdrop-blur-md rounded-2xl p-2.5 border border-white/10 shadow-lg flex items-center space-x-2">
+            <i class="fa-solid fa-magnifying-glass text-gray-400 text-sm ml-2"></i>
+            <input type="text" id="search-input" onkeyup="filterUMKM()" placeholder="Cari produk / usaha warga..." class="bg-transparent text-xs text-white placeholder-gray-400 focus:outline-none w-full">
+        </div>
+
+        <!-- LIST PRODUK UMKM -->
+        <div id="umkm-list" class="space-y-3">
+
+            <!-- UMKM Item 1 -->
+            <div class="umkm-card bg-black/40 backdrop-blur-md rounded-2xl p-3.5 border border-white/10 shadow-lg flex space-x-3 items-center">
+                <div class="w-20 h-20 bg-gradient-to-tr from-amber-600 to-orange-400 rounded-xl flex items-center justify-center text-2xl shadow-md border border-white/10 shrink-0">
+                    <i class="fa-solid fa-utensils text-white"></i>
+                </div>
+                <div class="flex-1 min-w-0">
+                    <div class="flex items-center justify-between">
+                        <span class="text-[10px] bg-orange-500/20 text-orange-300 px-2 py-0.5 rounded-full border border-orange-400/30">Kuliner</span>
+                        <span class="text-[10px] text-gray-400"><i class="fa-solid fa-location-dot mr-1"></i>RT 02 / RW 03</span>
+                    </div>
+                    <h3 class="umkm-title font-bold text-sm text-white mt-1 truncate">Dapur Bu Titin (Keripik Tempe)</h3>
+                    <p class="text-[11px] text-gray-300">Aneka keripik tempe renyah tanpa bahan pengawet.</p>
+                    <div class="mt-2 flex justify-between items-center">
+                        <span class="font-semibold text-xs text-amber-300">Rp 12.000 / bungkus</span>
+                        <a href="https://wa.me/6285895373558?text=Halo%20Bu%20Titin,%20saya%20ingin%20pesan%20keripik%20tempe" target="_blank" class="bg-emerald-600 hover:bg-emerald-500 text-white px-2.5 py-1 rounded-lg text-[10px] font-semibold flex items-center transition">
+                            <i class="fa-brands fa-whatsapp mr-1 text-xs"></i> Pesan
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- UMKM Item 2 -->
+            <div class="umkm-card bg-black/40 backdrop-blur-md rounded-2xl p-3.5 border border-white/10 shadow-lg flex space-x-3 items-center">
+                <div class="w-20 h-20 bg-gradient-to-tr from-purple-600 to-pink-500 rounded-xl flex items-center justify-center text-2xl shadow-md border border-white/10 shrink-0">
+                    <i class="fa-solid fa-shirt text-white"></i>
+                </div>
+                <div class="flex-1 min-w-0">
+                    <div class="flex items-center justify-between">
+                        <span class="text-[10px] bg-purple-500/20 text-purple-300 px-2 py-0.5 rounded-full border border-purple-400/30">Fashion / Kerajinan</span>
+                        <span class="text-[10px] text-gray-400"><i class="fa-solid fa-location-dot mr-1"></i>RT 05 / RW 01</span>
+                    </div>
+                    <h3 class="umkm-title font-bold text-sm text-white mt-1 truncate">Batik Shibori Sukamaju</h3>
+                    <p class="text-[11px] text-gray-300">Kain batik shibori dan pakaian buatan tangan warga.</p>
+                    <div class="mt-2 flex justify-between items-center">
+                        <span class="font-semibold text-xs text-amber-300">Mulai Rp 85.000</span>
+                        <a href="https://wa.me/6281234567891?text=Halo,%20saya%20ingin%20tanya%20produk%20Batik%20Shibori" target="_blank" class="bg-emerald-600 hover:bg-emerald-500 text-white px-2.5 py-1 rounded-lg text-[10px] font-semibold flex items-center transition">
+                            <i class="fa-brands fa-whatsapp mr-1 text-xs"></i> Pesan
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- UMKM Item 3 -->
+            <div class="umkm-card bg-black/40 backdrop-blur-md rounded-2xl p-3.5 border border-white/10 shadow-lg flex space-x-3 items-center">
+                <div class="w-20 h-20 bg-gradient-to-tr from-cyan-600 to-blue-500 rounded-xl flex items-center justify-center text-2xl shadow-md border border-white/10 shrink-0">
+                    <i class="fa-solid fa-faucet-drip text-white"></i>
+                </div>
+                <div class="flex-1 min-w-0">
+                    <div class="flex items-center justify-between">
+                        <span class="text-[10px] bg-cyan-500/20 text-cyan-300 px-2 py-0.5 rounded-full border border-cyan-400/30">Jasa</span>
+                        <span class="text-[10px] text-gray-400"><i class="fa-solid fa-location-dot mr-1"></i>RT 01 / RW 04</span>
+                    </div>
+                    <h3 class="umkm-title font-bold text-sm text-white mt-1 truncate">Sukamaju AC & Service</h3>
+                    <p class="text-[11px] text-gray-300">Jasa perbaikan AC, cuci AC, dan elektronik terpercaya.</p>
+                    <div class="mt-2 flex justify-between items-center">
+                        <span class="font-semibold text-xs text-amber-300">Cuci AC Rp 50.000</span>
+                        <a href="https://wa.me/6281234567892?text=Halo,%20saya%20ingin%20booking%20service%20AC" target="_blank" class="bg-emerald-600 hover:bg-emerald-500 text-white px-2.5 py-1 rounded-lg text-[10px] font-semibold flex items-center transition">
+                            <i class="fa-brands fa-whatsapp mr-1 text-xs"></i> Hubungi
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- UMKM Item 4 -->
+            <div class="umkm-card bg-black/40 backdrop-blur-md rounded-2xl p-3.5 border border-white/10 shadow-lg flex space-x-3 items-center">
+                <div class="w-20 h-20 bg-gradient-to-tr from-emerald-600 to-green-400 rounded-xl flex items-center justify-center text-2xl shadow-md border border-white/10 shrink-0">
+                    <i class="fa-solid fa-seedling text-white"></i>
+                </div>
+                <div class="flex-1 min-w-0">
+                    <div class="flex items-center justify-between">
+                        <span class="text-[10px] bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded-full border border-emerald-400/30">Pertanian / Hijau</span>
+                        <span class="text-[10px] text-gray-400"><i class="fa-solid fa-location-dot mr-1"></i>RT 04 / RW 06</span>
+                    </div>
+                    <h3 class="umkm-title font-bold text-sm text-white mt-1 truncate">Kebun Hidroponik Warga</h3>
+                    <p class="text-[11px] text-gray-300">Sayur segar bebas pestisida (Sawi, Bayam, Pakcoy).</p>
+                    <div class="mt-2 flex justify-between items-center">
+                        <span class="font-semibold text-xs text-amber-300">Rp 10.000 / pack</span>
+                        <a href="https://wa.me/6281234567893?text=Halo,%20saya%20mau%20beli%20sayur%20hidroponik" target="_blank" class="bg-emerald-600 hover:bg-emerald-500 text-white px-2.5 py-1 rounded-lg text-[10px] font-semibold flex items-center transition">
+                            <i class="fa-brands fa-whatsapp mr-1 text-xs"></i> Pesan
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- TOMBOL DAFTARKAN UMKM -->
+        <div class="bg-black/40 backdrop-blur-md rounded-2xl p-4 border border-white/10 shadow-lg text-center">
+            <p class="text-xs text-gray-200 mb-2">Punya usaha di wilayah Kelurahan Sukamaju?</p>
+            <button onclick="alert('Silakan hubungi RT/RW setempat atau ajukan pendaftaran UMKM melalui kantor Kelurahan.')" class="w-full bg-gradient-to-r from-orange-500 to-amber-500 hover:brightness-110 text-white text-xs font-semibold py-2 rounded-xl transition shadow-md">
+                <i class="fa-solid fa-plus-circle mr-1"></i> Daftarkan UMKM Anda
+            </button>
+        </div>
+
+    </div>
+
+    <!-- NAVIGATION BAR ANDROID -->
+    <div class="w-full bg-black/40 backdrop-blur-md py-3 px-8 flex justify-between items-center text-gray-300 max-w-md mx-auto z-20">
+        <button onclick="window.history.back()" class="hover:text-white transition" title="Kembali">
+            <i class="fa-solid fa-caret-left text-lg"></i>
+        </button>
+        <a href="index.html" class="hover:text-white transition" title="Home">
+            <i class="fa-solid fa-circle text-xs"></i>
+        </a>
+        <button onclick="alert('Aplikasi Kelurahan Digital V1.0')" class="hover:text-white transition" title="Menu Utama">
+            <i class="fa-solid fa-square text-xs"></i>
+        </button>
+    </div>
+
+    <script>
+        function updateTime() {
+            const now = new Date();
+            let hours = now.getHours().toString().padStart(2, '0');
+            let minutes = now.getMinutes().toString().padStart(2, '0');
+            document.getElementById('clock').innerText = `${hours}:${minutes}`;
+        }
+        setInterval(updateTime, 1000);
+        updateTime();
+
+        // Fitur Pencarian UMKM
+        function filterUMKM() {
+            const input = document.getElementById('search-input').value.toLowerCase();
+            const cards = document.getElementsByClassName('umkm-card');
+
+            for (let i = 0; i < cards.length; i++) {
+                const title = cards[i].querySelector('.umkm-title').innerText.toLowerCase();
+                const desc = cards[i].querySelector('p').innerText.toLowerCase();
+                if (title.includes(input) || desc.includes(input)) {
+                    cards[i].style.display = 'flex';
+                } else {
+                    cards[i].style.display = 'none';
+                }
+            }
+        }
+    </script>
+</body>
+</html>

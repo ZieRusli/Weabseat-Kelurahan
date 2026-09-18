@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Statistik Penduduk - Kelurahan Digital</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .android-wallpaper {
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1000&q=80') no-repeat center center fixed;
+            background-size: cover;
+        }
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="android-wallpaper min-h-screen flex flex-col justify-between text-white font-sans select-none overflow-hidden">
+
+    <!-- STATUS BAR ANDROID -->
+    <div class="w-full bg-black/40 backdrop-blur-md px-4 py-1 text-xs flex justify-between items-center text-gray-200 z-20">
+        <div class="flex items-center space-x-2">
+            <span id="clock" class="font-semibold">08:00</span>
+        </div>
+        <div class="flex items-center space-x-2">
+            <i class="fa-solid fa-signal text-[10px]"></i>
+            <i class="fa-solid fa-wifi text-[10px]"></i>
+            <span class="text-[10px]">98%</span>
+            <i class="fa-solid fa-battery-full text-xs"></i>
+        </div>
+    </div>
+
+    <!-- KONTEN HALAMAN STATISTIK -->
+    <div class="flex-1 flex flex-col max-w-md mx-auto w-full p-4 overflow-y-auto z-10">
+        
+        <!-- Header App -->
+        <div class="flex items-center justify-between mb-4 bg-white/10 backdrop-blur-md px-4 py-3 rounded-2xl border border-white/20">
+            <a href="index.html" class="w-8 h-8 flex items-center justify-center rounded-full bg-white/20 hover:bg-white/30 transition">
+                <i class="fa-solid fa-arrow-left text-sm"></i>
+            </a>
+            <h1 class="font-semibold text-base tracking-wide">Statistik Penduduk</h1>
+            <div class="w-8"></div>
+        </div>
+
+        <div class="space-y-3.5 pb-4">
+            
+            <!-- Ringkasan Total (Card Utama) -->
+            <div class="bg-gradient-to-r from-purple-600/80 to-indigo-600/80 backdrop-blur-md p-4 rounded-2xl border border-purple-400/30 shadow-lg text-center">
+                <p class="text-xs text-purple-200 font-medium">Total Seluruh Penduduk</p>
+                <h2 class="text-3xl font-bold mt-1 tracking-wider">8,425 <span class="text-sm font-normal">Jiwa</span></h2>
+                <div class="grid grid-cols-2 gap-2 mt-3 pt-3 border-t border-white/20 text-xs">
+                    <div>
+                        <p class="text-purple-200">Laki-Laki</p>
+                        <p class="font-semibold text-sm">4,210 Jiwa</p>
+                    </div>
+                    <div>
+                        <p class="text-purple-200">Perempuan</p>
+                        <p class="font-semibold text-sm">4,215 Jiwa</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Detail Kelompok Usia -->
+            <div class="bg-white/10 backdrop-blur-md p-4 rounded-2xl border border-white/20 space-y-3">
+                <h3 class="text-xs font-semibold uppercase tracking-wider text-purple-300">Kelompok Usia</h3>
+                <div class="space-y-2 text-xs">
+                    <div>
+                        <div class="flex justify-between mb-1">
+                            <span>Usia Produktif (15 - 54 Tahun)</span>
+                            <span class="font-semibold">5,120 Jiwa</span>
+                        </div>
+                        <div class="w-full bg-black/30 h-2 rounded-full overflow-hidden">
+                            <div class="bg-purple-400 h-full rounded-full" style="width: 65%"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between mb-1">
+                            <span>Anak-anak / Balita (0 - 14 Tahun)</span>
+                            <span class="font-semibold">2,105 Jiwa</span>
+                        </div>
+                        <div class="w-full bg-black/30 h-2 rounded-full overflow-hidden">
+                            <div class="bg-blue-400 h-full rounded-full" style="width: 25%"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between mb-1">
+                            <span>Lansia (55+ Tahun)</span>
+                            <span class="font-semibold">1,200 Jiwa</span>
+                        </div>
+                        <div class="w-full bg-black/30 h-2 rounded-full overflow-hidden">
+                            <div class="bg-rose-400 h-full rounded-full" style="width: 15%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Detail Pekerjaan Mayoritas -->
+            <div class="bg-white/10 backdrop-blur-md p-4 rounded-2xl border border-white/20 space-y-2.5">
+                <h3 class="text-xs font-semibold uppercase tracking-wider text-purple-300">Mata Pencaharian Utama</h3>
+                <div class="grid grid-cols-2 gap-2 text-xs">
+                    <div class="bg-black/20 p-2.5 rounded-xl border border-white/10">
+                        <p class="text-gray-400">Karyawan Swasta</p>
+                        <p class="font-semibold mt-0.5">3,400 Jiwa</p>
+                    </div>
+                    <div class="bg-black/20 p-2.5 rounded-xl border border-white/10">
+                        <p class="text-gray-400">Wiraswasta / UMKM</p>
+                        <p class="font-semibold mt-0.5">2,150 Jiwa</p>
+                    </div>
+                    <div class="bg-black/20 p-2.5 rounded-xl border border-white/10">
+                        <p class="text-gray-400">PNS / TNI / Polri</p>
+                        <p class="font-semibold mt-0.5">650 Jiwa</p>
+                    </div>
+                    <div class="bg-black/20 p-2.5 rounded-xl border border-white/10">
+                        <p class="text-gray-400">Lainnya / Pelajar</p>
+                        <p class="font-semibold mt-0.5">2,225 Jiwa</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- NAVIGATION BAR ANDROID (Tombol Kembali ke Index) -->
+    <div class="w-full bg-black/40 backdrop-blur-md py-3 px-8 flex justify-between items-center text-gray-300 max-w-md mx-auto z-20">
+        <a href="index.html" class="hover:text-white transition"><i class="fa-solid fa-caret-left text-lg"></i></a>
+        <a href="index.html" class="hover:text-white transition"><i class="fa-solid fa-circle text-xs"></i></a>
+        <a href="index.html" class="hover:text-white transition"><i class="fa-solid fa-square text-xs"></i></a>
+    </div>
+
+    <script>
+        function updateTime() {
+            const now = new Date();
+            let hours = now.getHours().toString().padStart(2, '0');
+            let minutes = now.getMinutes().toString().padStart(2, '0');
+            document.getElementById('clock').innerText = `${hours}:${minutes}`;
+        }
+        setInterval(updateTime, 1000);
+        updateTime();
+    </script>
+</body>
+</html>

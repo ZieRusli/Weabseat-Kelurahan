@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Surat Kelurahan - Android Style</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .android-wallpaper {
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1000&q=80') no-repeat center center fixed;
+            background-size: cover;
+        }
+        /* Custom scrollbar untuk konten aplikasi */
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="android-wallpaper min-h-screen flex flex-col justify-between text-white font-sans select-none">
+
+    <!-- 1. STATUS BAR ANDROID (Atas) -->
+    <div class="w-full bg-black/50 backdrop-blur-md px-4 py-1 text-xs flex justify-between items-center text-gray-200">
+        <div class="flex items-center space-x-2">
+            <span id="clock" class="font-semibold">08:00</span>
+        </div>
+        <div class="flex items-center space-x-2">
+            <i class="fa-solid fa-signal text-[10px]"></i>
+            <i class="fa-solid fa-wifi text-[10px]"></i>
+            <span class="text-[10px]">98%</span>
+            <i class="fa-solid fa-battery-full text-xs"></i>
+        </div>
+    </div>
+
+    <!-- 2. KONTEN APLIKASI E-SURAT (Tengah) -->
+    <div class="flex-1 flex flex-col max-w-md mx-auto w-full p-4 overflow-y-auto">
+        
+        <!-- App Bar / Header Aplikasi -->
+        <div class="flex items-center justify-between mb-4 bg-white/10 backdrop-blur-md px-4 py-3 rounded-2xl border border-white/20">
+            <a href="index.html" class="w-8 h-8 flex items-center justify-center rounded-full bg-white/20 hover:bg-white/30 transition">
+                <i class="fa-solid fa-arrow-left text-sm"></i>
+            </a>
+            <h1 class="font-semibold text-base tracking-wide">Layanan E-Surat</h1>
+            <div class="w-8"></div>
+        </div>
+
+        <!-- Banner Informasi Singkat -->
+        <div class="bg-blue-600/80 backdrop-blur-md p-3.5 rounded-2xl mb-4 text-xs flex items-start space-x-3 border border-blue-400/30 shadow-lg">
+            <i class="fa-solid fa-circle-info text-base mt-0.5 text-blue-200"></i>
+            <div>
+                <p class="font-semibold mb-0.5">Informasi Layanan</p>
+                <p class="text-blue-100 leading-relaxed">Pengajuan diproses pada jam kerja (Senin - Jumat, 08:00 - 15:00 WIB). Siapkan foto KTP & Pengantar RT/RW.</p>
+            </div>
+        </div>
+
+        <!-- Tab Navigasi Dalam Aplikasi -->
+        <div class="flex space-x-2 mb-4">
+            <button onclick="switchTab('ajukan')" id="btn-ajukan" class="flex-1 py-2 bg-blue-600 text-xs font-medium rounded-xl shadow transition">Buat Surat</button>
+            <button onclick="switchTab('lacak')" id="btn-lacak" class="flex-1 py-2 bg-white/10 hover:bg-white/20 text-xs font-medium rounded-xl border border-white/20 transition">Lacak Status</button>
+        </div>
+
+        <!-- KONTEN TAB 1: FORM PENGAJUAN -->
+        <div id="tab-ajukan" class="space-y-3">
+            <h2 class="text-xs font-semibold uppercase tracking-wider text-gray-300 ml-1">Pilih Jenis Surat</h2>
+            
+            <div class="space-y-2.5">
+                <div onclick="openForm('Surat Pengantar KTP / KK')" class="bg-white/10 hover:bg-white/20 backdrop-blur-md p-3.5 rounded-2xl border border-white/20 flex items-center justify-between cursor-pointer transition">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-blue-500/30 rounded-xl flex items-center justify-center text-blue-300">
+                            <i class="fa-solid fa-id-card"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm font-medium">Pengantar KTP / KK</p>
+                            <p class="text-[11px] text-gray-300">Pembuatan baru atau perubahan data</p>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-chevron-right text-xs text-gray-400"></i>
+                </div>
+
+                <div onclick="openForm('Surat Keterangan Domisili')" class="bg-white/10 hover:bg-white/20 backdrop-blur-md p-3.5 rounded-2xl border border-white/20 flex items-center justify-between cursor-pointer transition">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-emerald-500/30 rounded-xl flex items-center justify-center text-emerald-300">
+                            <i class="fa-solid fa-house-chimney"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm font-medium">Keterangan Domisili</p>
+                            <p class="text-[11px] text-gray-300">Bukti bertempat tinggal di wilayah</p>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-chevron-right text-xs text-gray-400"></i>
+                </div>
+
+                <div onclick="openForm('Surat Keterangan Usaha (SKU)')" class="bg-white/10 hover:bg-white/20 backdrop-blur-md p-3.5 rounded-2xl border border-white/20 flex items-center justify-between cursor-pointer transition">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-amber-500/30 rounded-xl flex items-center justify-center text-amber-300">
+                            <i class="fa-solid fa-store"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm font-medium">Keterangan Usaha (SKU)</p>
+                            <p class="text-[11px] text-gray-300">Untuk legalitas warung / UMKM</p>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-chevron-right text-xs text-gray-400"></i>
+                </div>
+
+                <div onclick="openForm('Surat Keterangan Tidak Mampu (SKTM)')" class="bg-white/10 hover:bg-white/20 backdrop-blur-md p-3.5 rounded-2xl border border-white/20 flex items-center justify-between cursor-pointer transition">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-rose-500/30 rounded-xl flex items-center justify-center text-rose-300">
+                            <i class="fa-solid fa-hands-holding-child"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm font-medium">SKTM (Tidak Mampu)</p>
+                            <p class="text-[11px] text-gray-300">Keperluan berobat atau sekolah</p>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-chevron-right text-xs text-gray-400"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- KONTEN TAB 2: LACAK STATUS -->
+        <div id="tab-lacak" class="hidden space-y-3">
+            <h2 class="text-xs font-semibold uppercase tracking-wider text-gray-300 ml-1">Lacak Pengajuan Surat</h2>
+            
+            <div class="bg-white/10 backdrop-blur-md p-4 rounded-2xl border border-white/20 space-y-3">
+                <p class="text-xs text-gray-200">Masukkan NIK Anda untuk memantau status:</p>
+                <div class="flex space-x-2">
+                    <input type="text" id="nikCari" placeholder="Contoh: 327105..." class="flex-1 bg-black/30 border border-white/20 rounded-xl px-3 py-2 text-xs text-white placeholder-gray-400 focus:outline-none focus:border-blue-400">
+                    <button onclick="lacakStatus()" id="btnLacak" class="bg-blue-600 hover:bg-blue-500 px-4 py-2 rounded-xl text-xs font-medium transition">Cek</button>
+                </div>
+            </div>
+
+            <!-- Wadah Hasil Pencarian -->
+            <div id="hasilLacak" class="space-y-2">
+                <div class="bg-white/5 backdrop-blur-md p-4 rounded-2xl border border-white/10 text-center text-xs text-gray-400">
+                    Belum ada data pencarian aktif.
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- MODAL FORM INPUT -->
+    <div id="form-modal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 hidden flex items-end sm:items-center justify-center p-0 sm:p-4">
+        <div class="bg-gray-900/90 border border-white/20 w-full max-w-md rounded-t-3xl sm:rounded-3xl p-5 text-white max-h-[85vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-4 border-b border-white/10 pb-3">
+                <h3 id="modal-title" class="font-semibold text-sm">Form Pengajuan</h3>
+                <button onclick="closeForm()" class="w-7 h-7 bg-white/10 rounded-full flex items-center justify-center hover:bg-white/20 transition"><i class="fa-solid fa-xmark text-xs"></i></button>
+            </div>
+            
+            <form id="suratForm" onsubmit="kirimPengajuanSurat(event)" class="space-y-3.5 text-xs">
+                <input type="hidden" id="inputJenisSurat">
+                <div>
+                    <label class="block mb-1 text-gray-300 font-medium">Nama Lengkap (Sesuai KTP)</label>
+                    <input type="text" id="inputNama" required placeholder="Masukkan nama lengkap" class="w-full bg-black/40 border border-white/20 rounded-xl px-3 py-2 text-white placeholder-gray-500 focus:outline-none focus:border-blue-400">
+                </div>
+                <div>
+                    <label class="block mb-1 text-gray-300 font-medium">Nomor Induk Kependudukan (NIK)</label>
+                    <input type="text" id="inputNik" required placeholder="16 digit NIK" class="w-full bg-black/40 border border-white/20 rounded-xl px-3 py-2 text-white placeholder-gray-500 focus:outline-none focus:border-blue-400">
+                </div>
+                <div>
+                    <label class="block mb-1 text-gray-300 font-medium">Nomor WhatsApp Aktif</label>
+                    <input type="text" id="inputWa" required placeholder="08xxxxxxxxxx" class="w-full bg-black/40 border border-white/20 rounded-xl px-3 py-2 text-white placeholder-gray-500 focus:outline-none focus:border-blue-400">
+                </div>
+                <div>
+                    <label class="block mb-1 text-gray-300 font-medium">Keperluan / Keterangan Tambahan</label>
+                    <textarea id="inputKeperluan" rows="2" placeholder="Misal: Untuk keperluan melamar kerja" class="w-full bg-black/40 border border-white/20 rounded-xl px-3 py-2 text-white placeholder-gray-500 focus:outline-none focus:border-blue-400"></textarea>
+                </div>
+                <div>
+                    <label class="block mb-1 text-gray-300 font-medium">Upload Foto KTP / Pengantar RT</label>
+                    <input type="file" id="inputFile" accept="image/*,.pdf" class="w-full text-xs text-gray-400 file:mr-3 file:py-2 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-medium file:bg-blue-600 file:text-white hover:file:bg-blue-500 cursor-pointer">
+                </div>
+                <button type="submit" id="btnSubmitSurat" class="w-full bg-blue-600 hover:bg-blue-500 py-2.5 rounded-xl font-medium shadow transition mt-2 flex justify-center items-center">
+                    <span id="btnSubmitText">Kirim Pengajuan Surat</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 3. NAVIGATION BAR ANDROID (Bawah) -->
+    <div class="w-full bg-black/50 backdrop-blur-md py-3 px-8 flex justify-between items-center text-gray-300 max-w-md mx-auto">
+        <a href="index.html" class="hover:text-white transition"><i class="fa-solid fa-caret-left text-lg"></i></a>
+        <a href="index.html" class="hover:text-white transition"><i class="fa-solid fa-circle text-xs"></i></a>
+        <a href="index.html" class="hover:text-white transition"><i class="fa-solid fa-square text-xs"></i></a>
+    </div>
+
+    <!-- Script Pendukung Interaksi & Google Apps Script -->
+    <script>
+        // PASTE URL WEB APP GOOGLE APPS SCRIPT ANDA DI SINI
+        const GAS_URL = "https://script.google.com/macros/s/AKfycbygPYtgav1XJuNsyOgkzwmU1_LW_GrGfZDuZA9-YlnYDVSCI5BCkmmH1dpQJ80p_rEytw/exec";
+
+        // Jam Realtime Status Bar
+        function updateTime() {
+            const now = new Date();
+            let hours = now.getHours().toString().padStart(2, '0');
+            let minutes = now.getMinutes().toString().padStart(2, '0');
+            document.getElementById('clock').innerText = `${hours}:${minutes}`;
+        }
+        setInterval(updateTime, 1000);
+        updateTime();
+
+        // Switch Tab (Buat Surat vs Lacak)
+        function switchTab(tab) {
+            const btnAjukan = document.getElementById('btn-ajukan');
+            const btnLacak = document.getElementById('btn-lacak');
+            const tabAjukan = document.getElementById('tab-ajukan');
+            const tabLacak = document.getElementById('tab-lacak');
+
+            if (tab === 'ajukan') {
+                btnAjukan.className = "flex-1 py-2 bg-blue-600 text-xs font-medium rounded-xl shadow transition";
+                btnLacak.className = "flex-1 py-2 bg-white/10 hover:bg-white/20 text-xs font-medium rounded-xl border border-white/20 transition";
+                tabAjukan.classList.remove('hidden');
+                tabLacak.classList.add('hidden');
+            } else {
+                btnLacak.className = "flex-1 py-2 bg-blue-600 text-xs font-medium rounded-xl shadow transition";
+                btnAjukan.className = "flex-1 py-2 bg-white/10 hover:bg-white/20 text-xs font-medium rounded-xl border border-white/20 transition";
+                tabLacak.classList.remove('hidden');
+                tabAjukan.classList.add('hidden');
+            }
+        }
+
+        // Modal Form Handler
+        function openForm(jenisSurat) {
+            document.getElementById('modal-title').innerText = "Form: " + jenisSurat;
+            document.getElementById('inputJenisSurat').value = jenisSurat;
+            document.getElementById('form-modal').classList.remove('hidden');
+        }
+
+        function closeForm() {
+            document.getElementById('form-modal').classList.add('hidden');
+        }
+
+        // Submisi Form Ke Google Apps Script
+        async function kirimPengajuanSurat(e) {
+            e.preventDefault();
+
+            const btnSubmit = document.getElementById('btnSubmitSurat');
+            const btnText = document.getElementById('btnSubmitText');
+            btnSubmit.disabled = true;
+            btnText.innerText = "Mengirim...";
+
+            const fileInput = document.getElementById('inputFile');
+            let fileData = null;
+
+            if (fileInput.files.length > 0) {
+                const file = fileInput.files[0];
+                fileData = await new Promise((resolve) => {
+                    const reader = new FileReader();
+                    reader.onload = (evt) => {
+                        const base64 = evt.target.result.split(',')[1];
+                        resolve({
+                            base64: base64,
+                            type: file.type,
+                            name: file.name
+                        });
+                    };
+                    reader.readAsDataURL(file);
+                });
+            }
+
+            const payload = {
+                jenisSurat: document.getElementById('inputJenisSurat').value,
+                nama: document.getElementById('inputNama').value,
+                nik: document.getElementById('inputNik').value,
+                wa: document.getElementById('inputWa').value,
+                keperluan: document.getElementById('inputKeperluan').value,
+                file: fileData
+            };
+
+            fetch(GAS_URL, {
+                method: "POST",
+                mode: "no-cors",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(payload)
+            })
+            .then(() => {
+                alert('Pengajuan surat berhasil dikirim! Anda bisa memantau statusnya di menu "Lacak Status" menggunakan NIK Anda.');
+                document.getElementById('suratForm').reset();
+                closeForm();
+            })
+            .catch(err => {
+                alert('Gagal mengirim pengajuan. Silakan coba lagi.');
+                console.error(err);
+            })
+            .finally(() => {
+                btnSubmit.disabled = false;
+                btnText.innerText = "Kirim Pengajuan Surat";
+            });
+        }
+
+        // Fungsi Lacak Status Berdasarkan NIK
+        function lacakStatus() {
+            const nik = document.getElementById('nikCari').value.trim();
+            const container = document.getElementById('hasilLacak');
+            const btnLacak = document.getElementById('btnLacak');
+
+            if (!nik) {
+                alert('Silakan masukkan NIK terlebih dahulu.');
+                return;
+            }
+
+            btnLacak.disabled = true;
+            btnLacak.innerText = "...";
+            container.innerHTML = `<div class="bg-white/5 backdrop-blur-md p-4 rounded-2xl border border-white/10 text-center text-xs text-gray-300"><i class="fa-solid fa-spinner animate-spin mr-2"></i>Mencari data...</div>`;
+
+            fetch(`${GAS_URL}?nik=${encodeURIComponent(nik)}`)
+            .then(res => res.json())
+            .then(res => {
+                if (res.status === "success" && res.data.length > 0) {
+                    container.innerHTML = "";
+                    res.data.forEach(item => {
+                        let statusColor = "bg-amber-500/20 text-amber-300 border-amber-500/30";
+                        if (item.status === "Selesai") statusColor = "bg-emerald-500/20 text-emerald-300 border-emerald-500/30";
+                        if (item.status === "Ditolak") statusColor = "bg-rose-500/20 text-rose-300 border-rose-500/30";
+
+                        container.innerHTML += `
+                            <div class="bg-white/10 backdrop-blur-md p-3.5 rounded-2xl border border-white/20 space-y-1.5 text-xs">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-[10px] ${statusColor} border px-2 py-0.5 rounded-full font-medium">${item.status}</span>
+                                    <span class="text-[10px] text-gray-400">${item.waktu}</span>
+                                </div>
+                                <h4 class="font-bold text-white text-sm">${item.jenisSurat}</h4>
+                                <p class="text-gray-300 text-[11px]">Pemohon: ${item.nama}</p>
+                            </div>
+                        `;
+                    });
+                } else {
+                    container.innerHTML = `<div class="bg-white/5 backdrop-blur-md p-4 rounded-2xl border border-white/10 text-center text-xs text-gray-400">Tidak ditemukan pengajuan surat dengan NIK tersebut.</div>`;
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                container.innerHTML = `<div class="bg-white/5 backdrop-blur-md p-4 rounded-2xl border border-white/10 text-center text-xs text-rose-400">Terjadi kesalahan saat memuat data.</div>`;
+            })
+            .finally(() => {
+                btnLacak.disabled = false;
+                btnLacak.innerText = "Cek";
+            });
+        }
+    </script>
+</body>
+</html>

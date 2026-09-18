@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kontak & Pusat Bantuan - Kelurahan Digital</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .android-wallpaper {
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1000&q=80') no-repeat center center fixed;
+            background-size: cover;
+        }
+        /* Custom scrollbar style */
+        .custom-scroll::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scroll::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .custom-scroll::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="android-wallpaper min-h-screen flex flex-col justify-between text-white font-sans select-none overflow-hidden">
+
+    <!-- STATUS BAR ANDROID -->
+    <div class="w-full bg-black/40 backdrop-blur-md px-4 py-1 text-xs flex justify-between items-center text-gray-200 z-20">
+        <div class="flex items-center space-x-2">
+            <span id="clock" class="font-semibold">08:00</span>
+        </div>
+        <div class="flex items-center space-x-2">
+            <i class="fa-solid fa-signal text-[10px]"></i>
+            <i class="fa-solid fa-wifi text-[10px]"></i>
+            <span class="text-[10px]">98%</span>
+            <i class="fa-solid fa-battery-full text-xs"></i>
+        </div>
+    </div>
+
+    <!-- APP HEADER -->
+    <div class="w-full max-w-md mx-auto bg-black/30 backdrop-blur-md px-4 py-3 flex items-center justify-between border-b border-white/10 z-10">
+        <a href="index.html" class="flex items-center text-white hover:text-slate-300 transition">
+            <i class="fa-solid fa-arrow-left text-lg mr-3"></i>
+            <span class="font-semibold text-base">Kontak & Bantuan</span>
+        </a>
+        <div class="w-8 h-8 bg-slate-500/20 rounded-full flex items-center justify-center border border-slate-400/30">
+            <i class="fa-solid fa-headset text-slate-300 text-sm"></i>
+        </div>
+    </div>
+
+    <!-- KONTEN UTAMA (SCROLLABLE AREA) -->
+    <div class="flex-1 overflow-y-auto custom-scroll px-4 py-4 max-w-md mx-auto w-full space-y-4">
+
+        <!-- FORM KIRIM PESAN KE GOOGLE SHEET -->
+        <div class="bg-black/40 backdrop-blur-md rounded-2xl p-4 border border-cyan-500/30 shadow-lg space-y-3">
+            <h3 class="font-semibold text-sm text-cyan-400 flex items-center">
+                <i class="fa-solid fa-paper-plane mr-2"></i> Kirim Pesan / Bantuan
+            </h3>
+            
+            <form id="formKontak" onsubmit="kirimPesan(event)" class="space-y-3 text-xs">
+                <div>
+                    <label class="block text-gray-300 mb-1">Nama Lengkap</label>
+                    <input type="text" id="inputNama" required class="w-full bg-white/10 border border-white/20 rounded-xl p-2.5 text-white placeholder-gray-400 focus:outline-none focus:border-cyan-400" placeholder="Masukkan nama Anda">
+                </div>
+                <div>
+                    <label class="block text-gray-300 mb-1">Nomor Telepon / WhatsApp</label>
+                    <input type="tel" id="inputTelepon" required class="w-full bg-white/10 border border-white/20 rounded-xl p-2.5 text-white placeholder-gray-400 focus:outline-none focus:border-cyan-400" placeholder="Contoh: 08123456789">
+                </div>
+                <div>
+                    <label class="block text-gray-300 mb-1">Kategori Keperluan</label>
+                    <select id="inputKategori" class="w-full bg-slate-800 border border-white/20 rounded-xl p-2.5 text-white focus:outline-none focus:border-cyan-400">
+                        <option value="Pertanyaan Umum">Pertanyaan Umum</option>
+                        <option value="Permohonan Informasi">Permohonan Informasi</option>
+                        <option value="Saran & Masukan">Saran & Masukan</option>
+                        <option value="Lainnya">Lainnya</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-gray-300 mb-1">Pesan / Detail Bantuan</label>
+                    <textarea id="inputPesan" required rows="3" class="w-full bg-white/10 border border-white/20 rounded-xl p-2.5 text-white placeholder-gray-400 focus:outline-none focus:border-cyan-400 resize-none" placeholder="Tuliskan pesan Anda di sini..."></textarea>
+                </div>
+                <button type="submit" id="btnKirim" class="w-full bg-cyan-600 hover:bg-cyan-500 text-white font-semibold py-2.5 rounded-xl border border-cyan-400/30 transition shadow-md flex justify-center items-center">
+                    <span id="btnText">Kirim Ke Google Sheet</span>
+                </button>
+            </form>
+        </div>
+
+        <!-- KARTU 1: PANGGILAN DARURAT (QUICK CALL) -->
+        <div class="bg-black/40 backdrop-blur-md rounded-2xl p-4 border border-rose-500/30 shadow-lg">
+            <h3 class="font-semibold text-sm mb-3 text-rose-400 flex items-center">
+                <i class="fa-solid fa-phone-volume mr-2 animate-pulse"></i> Nomor Darurat
+            </h3>
+            <div class="grid grid-cols-2 gap-2 text-xs">
+                <!-- Ambulans Kelurahan -->
+                <a href="tel:081234567890" class="bg-rose-500/20 hover:bg-rose-500/30 border border-rose-500/40 p-2.5 rounded-xl flex items-center space-x-2 transition">
+                    <div class="w-8 h-8 bg-rose-500 rounded-lg flex items-center justify-center text-white shrink-0">
+                        <i class="fa-solid fa-truck-medical text-xs"></i>
+                    </div>
+                    <div class="min-w-0">
+                        <p class="text-[10px] text-gray-300 font-medium">Ambulans</p>
+                        <p class="font-bold text-white text-[11px] truncate">0812-3456-7890</p>
+                    </div>
+                </a>
+
+                <!-- Bhabinkamtibmas (Polisi) -->
+                <a href="tel:081234567891" class="bg-blue-500/20 hover:bg-blue-500/30 border border-blue-500/40 p-2.5 rounded-xl flex items-center space-x-2 transition">
+                    <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white shrink-0">
+                        <i class="fa-solid fa-user-shield text-xs"></i>
+                    </div>
+                    <div class="min-w-0">
+                        <p class="text-[10px] text-gray-300 font-medium">Polisi Desa</p>
+                        <p class="font-bold text-white text-[11px] truncate">0812-3456-7891</p>
+                    </div>
+                </a>
+
+                <!-- Babinsa (TNI) -->
+                <a href="tel:081234567892" class="bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-500/40 p-2.5 rounded-xl flex items-center space-x-2 transition">
+                    <div class="w-8 h-8 bg-emerald-600 rounded-lg flex items-center justify-center text-white shrink-0">
+                        <i class="fa-solid fa-person-military-rifle text-xs"></i>
+                    </div>
+                    <div class="min-w-0">
+                        <p class="text-[10px] text-gray-300 font-medium">Babinsa</p>
+                        <p class="font-bold text-white text-[11px] truncate">0812-3456-7892</p>
+                    </div>
+                </a>
+
+                <!-- Pemadam Kebakaran -->
+                <a href="tel:113" class="bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/40 p-2.5 rounded-xl flex items-center space-x-2 transition">
+                    <div class="w-8 h-8 bg-amber-600 rounded-lg flex items-center justify-center text-white shrink-0">
+                        <i class="fa-solid fa-fire-extinguisher text-xs"></i>
+                    </div>
+                    <div class="min-w-0">
+                        <p class="text-[10px] text-gray-300 font-medium">Damkar</p>
+                        <p class="font-bold text-white text-[11px] truncate">113</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- KARTU 2: LAYANAN KANTOR KELURAHAN -->
+        <div class="bg-black/40 backdrop-blur-md rounded-2xl p-4 border border-white/10 shadow-lg space-y-3">
+            <h3 class="font-semibold text-sm text-slate-300 flex items-center">
+                <i class="fa-solid fa-building-columns mr-2"></i> Kantor Kelurahan
+            </h3>
+            
+            <div class="space-y-2 text-xs">
+                <!-- Alamat -->
+                <div class="flex items-start space-x-3 bg-white/5 p-2.5 rounded-xl border border-white/5">
+                    <i class="fa-solid fa-location-dot text-rose-400 text-sm mt-0.5"></i>
+                    <div>
+                        <p class="text-[10px] text-gray-400">Alamat Lengkap</p>
+                        <p class="text-gray-200">Jl. Pemuda Merdeka No. 45, Kel. Sukamaju, Kec. Sukamaju Jaya</p>
+                    </div>
+                </div>
+
+                <!-- WhatsApp Official -->
+                <a href="https://wa.me/6281234567890?text=Halo%20Admin%20Kelurahan,%20saya%20ingin%20bertanya" target="_blank" class="flex items-center justify-between bg-emerald-600/20 hover:bg-emerald-600/30 border border-emerald-500/30 p-2.5 rounded-xl text-emerald-300 transition">
+                    <div class="flex items-center space-x-2">
+                        <i class="fa-brands fa-whatsapp text-lg"></i>
+                        <div>
+                            <p class="text-[10px] text-gray-300">WhatsApp Pelayanan</p>
+                            <p class="font-bold text-white">0812-3456-7890</p>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-chevron-right text-xs"></i>
+                </a>
+
+                <!-- Email -->
+                <div class="flex items-center space-x-3 bg-white/5 p-2.5 rounded-xl border border-white/5">
+                    <i class="fa-solid fa-envelope text-cyan-400 text-sm"></i>
+                    <div>
+                        <p class="text-[10px] text-gray-400">Email Resmi</p>
+                        <p class="text-gray-200 font-medium">kelurahan@sukamaju.go.id</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Google Maps Button -->
+            <a href="https://maps.google.com" target="_blank" class="block w-full bg-white/10 hover:bg-white/20 text-center py-2 rounded-xl text-xs font-semibold border border-white/10 transition">
+                <i class="fa-solid fa-map-location-dot mr-1"></i> Buka Lokasi di Google Maps
+            </a>
+        </div>
+
+        <!-- KARTU 3: MEDIA SOSIAL RESMI -->
+        <div class="bg-black/40 backdrop-blur-md rounded-2xl p-4 border border-white/10 shadow-lg">
+            <h3 class="font-semibold text-sm mb-3 text-slate-300 flex items-center">
+                <i class="fa-solid fa-share-nodes mr-2"></i> Media Sosial Resmi
+            </h3>
+            <div class="grid grid-cols-3 gap-2">
+                <a href="#" onclick="alert('Membuka Instagram Kelurahan')" class="bg-gradient-to-tr from-purple-600 to-pink-500 p-2 rounded-xl flex flex-col items-center justify-center text-center shadow-md">
+                    <i class="fa-brands fa-instagram text-xl text-white"></i>
+                    <span class="text-[10px] font-medium mt-1">Instagram</span>
+                </a>
+                <a href="#" onclick="alert('Membuka Facebook Kelurahan')" class="bg-gradient-to-tr from-blue-700 to-blue-500 p-2 rounded-xl flex flex-col items-center justify-center text-center shadow-md">
+                    <i class="fa-brands fa-facebook text-xl text-white"></i>
+                    <span class="text-[10px] font-medium mt-1">Facebook</span>
+                </a>
+                <a href="#" onclick="alert('Membuka YouTube Kelurahan')" class="bg-gradient-to-tr from-red-700 to-red-500 p-2 rounded-xl flex flex-col items-center justify-center text-center shadow-md">
+                    <i class="fa-brands fa-youtube text-xl text-white"></i>
+                    <span class="text-[10px] font-medium mt-1">YouTube</span>
+                </a>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- NAVIGATION BAR ANDROID -->
+    <div class="w-full bg-black/40 backdrop-blur-md py-3 px-8 flex justify-between items-center text-gray-300 max-w-md mx-auto z-20">
+        <button onclick="window.history.back()" class="hover:text-white transition" title="Kembali">
+            <i class="fa-solid fa-caret-left text-lg"></i>
+        </button>
+        <a href="index.html" class="hover:text-white transition" title="Home">
+            <i class="fa-solid fa-circle text-xs"></i>
+        </a>
+        <button onclick="alert('Aplikasi Kelurahan Digital V1.0')" class="hover:text-white transition" title="Menu Utama">
+            <i class="fa-solid fa-square text-xs"></i>
+        </button>
+    </div>
+
+    <script>
+        // Update Waktu Jam Android
+        function updateTime() {
+            const now = new Date();
+            let hours = now.getHours().toString().padStart(2, '0');
+            let minutes = now.getMinutes().toString().padStart(2, '0');
+            document.getElementById('clock').innerText = `${hours}:${minutes}`;
+        }
+        setInterval(updateTime, 1000);
+        updateTime();
+
+        // -------------------------------------------------------------
+        // INTEGRASI GOOGLE APPS SCRIPT
+        // -------------------------------------------------------------
+        // PASTE URL WEB APP APPS SCRIPT ANDA DI DALAM KUTIP DI BAWAH INI:
+        const GAS_URL = "https://script.google.com/macros/s/AKfycbzIFcme-4QiodzZRjNpot0qYGMbl-f3dmghROVtI7O-qdhQ8da9y022ykRL4gBOTsW-Aw/exec";
+
+        function kirimPesan(e) {
+            e.preventDefault();
+
+            const btn = document.getElementById('btnKirim');
+            const btnText = document.getElementById('btnText');
+            
+            btn.disabled = true;
+            btnText.innerHTML = `<i class="fa-solid fa-spinner animate-spin mr-2"></i> Mengirim...`;
+
+            const payload = {
+                nama: document.getElementById('inputNama').value,
+                telepon: document.getElementById('inputTelepon').value,
+                kategori: document.getElementById('inputKategori').value,
+                pesan: document.getElementById('inputPesan').value
+            };
+
+            fetch(GAS_URL, {
+                method: "POST",
+                mode: "no-cors",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(payload)
+            })
+            .then(() => {
+                alert("Terima kasih! Pesan/Bantuan Anda berhasil dikirim ke Google Sheet.");
+                document.getElementById('formKontak').reset();
+            })
+            .catch(err => {
+                alert("Gagal mengirim pesan. Silakan coba lagi.");
+                console.error("Error:", err);
+            })
+            .finally(() => {
+                btn.disabled = false;
+                btnText.innerText = "Kirim Ke Google Sheet";
+            });
+        }
+    </script>
+</body>
+</html>

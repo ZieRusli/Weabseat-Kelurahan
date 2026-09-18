@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agenda Kegiatan - Kelurahan Digital</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .android-wallpaper {
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1000&q=80') no-repeat center center fixed;
+            background-size: cover;
+        }
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="android-wallpaper min-h-screen flex flex-col justify-between text-white font-sans select-none overflow-hidden">
+
+    <!-- STATUS BAR ANDROID -->
+    <div class="w-full bg-black/40 backdrop-blur-md px-4 py-1 text-xs flex justify-between items-center text-gray-200 z-20">
+        <div class="flex items-center space-x-2">
+            <span id="clock" class="font-semibold">08:00</span>
+        </div>
+        <div class="flex items-center space-x-2">
+            <i class="fa-solid fa-signal text-[10px]"></i>
+            <i class="fa-solid fa-wifi text-[10px]"></i>
+            <span class="text-[10px]">98%</span>
+            <i class="fa-solid fa-battery-full text-xs"></i>
+        </div>
+    </div>
+
+    <!-- KONTEN HALAMAN AGENDA -->
+    <div class="flex-1 flex flex-col max-w-md mx-auto w-full p-4 overflow-y-auto z-10">
+        
+        <!-- Header App -->
+        <div class="flex items-center justify-between mb-4 bg-white/10 backdrop-blur-md px-4 py-3 rounded-2xl border border-white/20">
+            <a href="index.html" class="w-8 h-8 flex items-center justify-center rounded-full bg-white/20 hover:bg-white/30 transition">
+                <i class="fa-solid fa-arrow-left text-sm"></i>
+            </a>
+            <h1 class="font-semibold text-base tracking-wide">Agenda Kegiatan</h1>
+            <div class="w-8"></div>
+        </div>
+
+        <!-- Daftar Agenda -->
+        <div class="space-y-3 pb-4">
+            
+            <!-- Agenda 1 (Aktif/Akan Datang) -->
+            <div class="bg-white/10 backdrop-blur-md p-4 rounded-2xl border border-white/20 shadow-lg space-y-2.5">
+                <div class="flex justify-between items-start">
+                    <span class="bg-rose-500/80 text-white text-[10px] font-semibold px-2.5 py-1 rounded-full border border-rose-400/30">
+                        Akan Datang
+                    </span>
+                    <span class="text-xs text-rose-300 font-medium"><i class="fa-regular fa-calendar mr-1"></i> 10 Agustus 2026</span>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-sm leading-snug">Musyawarah Perencanaan Pembangunan (Musrenbang)</h3>
+                    <p class="text-xs text-gray-300 mt-1">Pembahasan rencana pembangunan fisik dan pemberdayaan warga kelurahan untuk tahun anggaran mendatang.</p>
+                </div>
+                <div class="pt-2 border-t border-white/10 flex justify-between items-center text-xs text-gray-300">
+                    <span><i class="fa-solid fa-location-dot text-rose-400 mr-1"></i> Aula Kantor Kelurahan</span>
+                    <span class="font-medium text-white"><i class="fa-regular fa-clock mr-1"></i> 09:00 WIB</span>
+                </div>
+            </div>
+
+            <!-- Agenda 2 -->
+            <div class="bg-white/10 backdrop-blur-md p-4 rounded-2xl border border-white/20 shadow-lg space-y-2.5">
+                <div class="flex justify-between items-start">
+                    <span class="bg-amber-500/80 text-white text-[10px] font-semibold px-2.5 py-1 rounded-full border border-amber-400/30">
+                        Pekan Ini
+                    </span>
+                    <span class="text-xs text-amber-300 font-medium"><i class="fa-regular fa-calendar mr-1"></i> 12 Agustus 2026</span>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-sm leading-snug">Pelayanan Posyandu & Imunisasi Balita</h3>
+                    <p class="text-xs text-gray-300 mt-1">Pemeriksaan kesehatan rutin balita dan pemberian vitamin gratis di pos pelayanan terpadu.</p>
+                </div>
+                <div class="pt-2 border-t border-white/10 flex justify-between items-center text-xs text-gray-300">
+                    <span><i class="fa-solid fa-location-dot text-amber-400 mr-1"></i> Posyandu RW 03</span>
+                    <span class="font-medium text-white"><i class="fa-regular fa-clock mr-1"></i> 08:00 WIB</span>
+                </div>
+            </div>
+
+            <!-- Agenda 3 -->
+            <div class="bg-white/10 backdrop-blur-md p-4 rounded-2xl border border-white/20 shadow-lg space-y-2.5">
+                <div class="flex justify-between items-start">
+                    <span class="bg-blue-500/80 text-white text-[10px] font-semibold px-2.5 py-1 rounded-full border border-blue-400/30">
+                        Bulanan
+                    </span>
+                    <span class="text-xs text-blue-300 font-medium"><i class="fa-regular fa-calendar mr-1"></i> 16 Agustus 2026</span>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-sm leading-snug">Kerja Bakti Massal Kebersihan Lingkungan</h3>
+                    <p class="text-xs text-gray-300 mt-1">Pembersihan saluran air dan pemangkasan dahan pohon dalam rangka menyambut HUT RI.</p>
+                </div>
+                <div class="pt-2 border-t border-white/10 flex justify-between items-center text-xs text-gray-300">
+                    <span><i class="fa-solid fa-location-dot text-blue-400 mr-1"></i> Masing-Masing RT/RW</span>
+                    <span class="font-medium text-white"><i class="fa-regular fa-clock mr-1"></i> 07:00 WIB</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- NAVIGATION BAR ANDROID (Tombol Kembali ke Index) -->
+    <div class="w-full bg-black/40 backdrop-blur-md py-3 px-8 flex justify-between items-center text-gray-300 max-w-md mx-auto z-20">
+        <a href="index.html" class="hover:text-white transition"><i class="fa-solid fa-caret-left text-lg"></i></a>
+        <a href="index.html" class="hover:text-white transition"><i class="fa-solid fa-circle text-xs"></i></a>
+        <a href="index.html" class="hover:text-white transition"><i class="fa-solid fa-square text-xs"></i></a>
+    </div>
+
+    <script>
+        function updateTime() {
+            const now = new Date();
+            let hours = now.getHours().toString().padStart(2, '0');
+            let minutes = now.getMinutes().toString().padStart(2, '0');
+            document.getElementById('clock').innerText = `${hours}:${minutes}`;
+        }
+        setInterval(updateTime, 1000);
+        updateTime();
+    </script>
+</body>
+</html>
